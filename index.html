@@ -12,32 +12,35 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 		<style>
-			.tooltip {
-			  position: relative;
-			  display: inline-block;
-			  border-bottom: 1px dotted black;
-			}
-			
-			.tooltip .tooltiptext {
-			  visibility: hidden;
-			  width: 400px;
-			  background-color: black;
-			  color: #fff;
-			  text-align: center;
-			  border-radius: 6px;
-			  padding: 5px 0;
-			  
-			  /* Position the tooltip */
-			  position: absolute;
-			  z-index: 1;
-			  bottom: 100%;
-			  left: 50%;
-			  margin-left: -60px;
-			}
-			
-			.tooltip:hover .tooltiptext {
-			  visibility: visible;
-			}
+			.container {
+  position: relative;
+  width: 75%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: #008CBA;
+}
+
+.container:hover .overlay {
+  opacity: 1;
+}
 			</style>
 	</head>
 	<body class="is-preload">
@@ -66,6 +69,44 @@
 							</ul>
 						</nav>
 					</header>
+					<script>
+						function myFunction() {
+						  // Declare variables
+						  var input, filter, table, tr, td, i, txtValue;
+						  input = document.getElementById("myInput");
+						  filter = input.value.toUpperCase();
+						  table = document.getElementById("myTable");
+						  tr = table.getElementsByTagName("tr");
+						
+						  // Loop through all table rows, and hide those who don't match the search query
+						  for (i = 0; i < tr.length; i++) {
+							td = tr[i].getElementsByTagName("td")[0];
+							if (td) {
+							  txtValue = td.textContent || td.innerText;
+							  if (txtValue.toUpperCase().indexOf(filter) > -1) {
+								tr[i].style.display = "";
+							  } else {
+								tr[i].style.display = "none";
+							  }
+							}
+						  }
+						}
+						</script>
+					<script>
+						var countDownDate = new Date("Mar 17, 2020 14:05:00").getTime();
+					var x = setInterval(function() {
+						var now = new Date().getTime();
+						var distance = countDownDate - now;
+						var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+						var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+						var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+						var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+						document.getElementById("countdown").innerHTML = +hours + " uur " + minutes + " minuten en " + seconds + " seconden ";
+						if (distance < 0) {
+							clearInterval(x);
+							document.getElementById("countdown").innerHTML = "een paar minuten";
+						}
+					}, 1000); </script>
 
 				<!-- Main -->
 					<div id="main">
@@ -105,30 +146,400 @@
 						<!-- Getallen -->
 							<article id="getallen">
 								<h2 class="major">Getallen</h2>
-								<h3><em>In Nederland</em><br>1413 positieve tests<br>20 mensen overleden<br>2 mensen genezen<br><br><em>Over de hele wereld</em><br>167,449 positieve tests<br>6,433 mensen overleden<br>75,709 mensen genezen</h3>
+								<h3><em>In Nederland</em><br>1413 positieve tests<br>24 mensen overleden<br>2 mensen genezen<br><br><em>Over de hele wereld</em><br>182,407 positieve tests<br>7,154 mensen overleden<br>79,433 mensen genezen</h3>
 								<h5>Kijk op <a href="#kaart">de kaart</a> voor meer informatie</h5>
-								<p>Laatst geupdate: Maandag 16 maart 2020 14:00. <br>Verwachtte volgende update over <span id="countdown">aan het laden...</span></p>
-								<p><h3>Binnenkort komt hier nog meer te staan!</h3><p><script>
-									var countDownDate = new Date("Mar 17, 2020 14:05:00").getTime();
-								var x = setInterval(function() {
-									var now = new Date().getTime();
-									var distance = countDownDate - now;
-									var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-									var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-									var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-									var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-									document.getElementById("countdown").innerHTML = +hours + " uur " + minutes + " minuten en " + seconds + " seconden ";
-									if (distance < 0) {
-										clearInterval(x);
-										document.getElementById("countdown").innerHTML = "een paar minuten";
-									}
-								}, 1000); </script>
+								<p>Laatst geüpdate: Maandag 16 maart 2020 14:00. <br>Verwachtte volgende update over <span id="countdown">aan het laden...</span></p>
+								<p><h3>Wereldwijde statistieken</h3></p>
+								<div class="container"><img src="flags/china.jpg" alt="China" class="image"><div class="overlay"><div class="text"><center><br><br><h2>1 - China</h2><h4>81,051 positieve tests<br>3,230 mensen overleden<br>68,777 mensen genezen</h4></center></div></div></div>
+								<div class="container"><img src="flags/italy.jpg" alt="Italy" class="image"><div class="overlay"><div class="text"><center><br><br><h2>2 - Italy</h2><h4>27,980 positieve tests<br>2,158 mensen overleden<br>2,749 mensen genezen</h4></center></div></div></div>
+								<div class="container"><img src="flags/iran.jpg" alt="Iran" class="image"><div class="overlay"><div class="text"><center><br><br><h2>3 - Iran</h2><h4>14,991 positieve tests<br>853 mensen overleden<br>4,590 mensen genezen</h4></center></div></div></div>
+								<div class="container"><img src="flags/spanje.jpg" alt="Spanje" class="image"><div class="overlay"><div class="text"><center><br><br><h2>4 - Spanje</h2><h4>9,942 positieve tests<br>342 mensen overleden<br>530 mensen genezen</h4></center></div></div></div>
+								<div class="container"><img src="flags/zuid_korea.jpg" alt="Zuid Korea" class="image"><div class="overlay"><div class="text"><center><br><br><h2>5 - Zuid Korea</h2><h4>8,320 positieve tests<br>75 mensen overleden<br>1,137 mensen genezen</h4></center></div></div></div>
+								<div class="container"><img src="flags/duitsland.jpg" alt="Duitsland" class="image"><div class="overlay"><div class="text"><center><br><br><h2>6 - Duitsland</h2><h4>7,272 positieve tests<br>17 mensen overleden<br>67 mensen genezen</h4></center></div></div></div>
+								<div class="container"><img src="flags/frankrijk.jpg" alt="Frankrijk" class="image"><div class="overlay"><div class="text"><center><br><br><h2>7 - Frankrijk</h2><h4>6,650 positieve tests<br>148 mensen overleden<br>12 mensen genezen</h4></center></div></div></div>
+								<div class="container"><img src="flags/vs.jpg" alt="Verenigde Staten" class="image"><div class="overlay"><div class="text"><center><br><br><h2>8 - Verenigde Staten</h2><h4>4,661 positieve tests<br>85 mensen overleden<br>17 mensen genezen</h4></center></div></div></div>
+								<div class="container"><img src="flags/zwitserland.jpg" alt="Zwitserland" class="image"><div class="overlay"><div class="text"><center><br><br><h2>9 - Zwitserland</h2><h4>2,330 positieve tests<br>19 mensen overleden<br>4 mensen genezen</h4></center></div></div></div>
+								<div class="container"><img src="flags/gb.jpg" alt="Groot Britannië" class="image"><div class="overlay"><div class="text"><center><br><br><h2>10 - Groot Britannië</h2><h4>1,553 positieve tests<br>56 mensen overleden<br>53 mensen genezen</h4></center></div></div></div>
+								<br><br>
+								
+								<div class="table-wrapper">
+									<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Zoek voor landen..."><br>
+									<p>Deze getallen worden elke dag om 15:00 geüpdate.</p>
+									<table id="myTable">
+										<thead>
+											<tr>
+												<th>Land</th>
+												<th>Positieve Tests</th>
+												<th>Overledenen</th>
+												<th>Genezen</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>Nederland</td>
+												<td>1414</td>
+												<td>24</td>
+												<td>2</td>
+											</tr>
+											<tr>
+												<td>Noorwegen</td>
+												<td>1347</td>
+												<td>3</td>
+												<td>1</td>
+											</tr>
+											<tr>
+												<td>Zweden</td>
+												<td>1121</td>
+												<td>7</td>
+												<td>1</td>
+											</tr>
+											<tr>
+												<td>België</td>
+												<td>1058</td>
+												<td>10</td>
+												<td>1</td>
+											</tr>
+											<tr>
+												<td>Oostenrijk</td>
+												<td>1018</td>
+												<td>3</td>
+												<td>8</td>
+											</tr>
+											<tr>
+												<td>Denemarken</td>
+												<td>932</td>
+												<td>4</td>
+												<td>1</td>
+											</tr>
+											<tr>
+												<td>Japan</td>
+												<td>833</td>
+												<td>17</td>
+												<td>139</td>
+											</tr>
+											<tr>
+												<td>Cruise Schip</td>
+												<td>696</td>
+												<td>7</td>
+												<td>325</td>
+											</tr>
+											<tr>
+												<td>Maleisië</td>
+												<td>566</td>
+												<td>0</td>
+												<td>42</td>
+											</tr>
+											<tr>
+												<td>Canada</td>
+												<td>439</td>
+												<td>4</td>
+												<td>9</td>
+											</tr>
+											<tr>
+												<td>Qatar</td>
+												<td>439</td>
+												<td>0</td>
+												<td>4</td>
+											</tr>
+											<tr>
+												<td>Australië</td>
+												<td>377</td>
+												<td>3</td>
+												<td>23</td>
+											</tr>
+											<tr>
+												<td>Griekenland</td>
+												<td>352</td>
+												<td>4</td>
+												<td>8</td>
+											</tr>
+											<tr>
+												<td>Tsjechië</td>
+												<td>344</td>
+												<td>0</td>
+												<td>3</td>
+											</tr>
+											<tr>
+												<td>Portugal</td>
+												<td>331</td>
+												<td>1</td>
+												<td>3</td>
+											</tr>
+											<tr>
+												<td>Israel</td>
+												<td>298</td>
+												<td>0</td>
+												<td>4</td>
+											</tr>
+											<tr>
+												<td>Finland</td>
+												<td>277</td>
+												<td>0</td>
+												<td>10</td>
+											</tr>
+											<tr>
+												<td>Slovenië</td>
+												<td>253</td>
+												<td>1</td>
+												<td>0</td>
+											</tr>
+											<tr>
+												<td>Singapore</td>
+												<td>243</td>
+												<td>0</td>
+												<td>109</td>
+											</tr>
+											<tr>
+												<td>Brazilië</td>
+												<td>234</td>
+												<td>0</td>
+												<td>2</td>
+											</tr>
+											<tr>
+												<td>Bahrein</td>
+												<td>228</td>
+												<td>1</td>
+												<td>81</td>
+											</tr>
+											<tr>
+												<td>Ierland</td>
+												<td>223</td>
+												<td>2</td>
+												<td>5</td>
+											</tr>
+											<tr>
+												<td>Estland</td>
+												<td>205</td>
+												<td>0</td>
+												<td>1</td>
+											</tr>
+											<tr>
+												<td>Pakistan</td>
+												<td>183</td>
+												<td>0</td>
+												<td>2</td>
+											</tr>
+											<tr>
+												<td>IJsland</td>
+												<td>180</td>
+												<td>0</td>
+												<td>0</td>
+											</tr>
+											<tr>
+												<td>Polen</td>
+												<td>117</td>
+												<td>4</td>
+												<td>13</td>
+											</tr>
+											<tr>
+												<td>Roemenië</td>
+												<td>168</td>
+												<td>0</td>
+												<td>9</td>
+											</tr>
+											<tr>
+												<td>Egypte</td>
+												<td>166</td>
+												<td>4</td>
+												<td>32</td>
+											</tr>
+											<tr>
+												<td>Chili</td>
+												<td>155</td>
+												<td>0</td>
+												<td>0</td>
+											</tr>
+											<tr>
+												<td>Thailand</td>
+												<td>147</td>
+												<td>1</td>
+												<td>35</td>
+											</tr>
+											<tr>
+												<td>Filipijnen</td>
+												<td>142</td>
+												<td>12</td>
+												<td>5</td>
+											</tr>
+											<tr>
+												<td>Indonesië</td>
+												<td>134</td>
+												<td>5</td>
+												<td>8</td>
+											</tr>
+											<tr>
+												<td>Saudi Arabië</td>
+												<td>133</td>
+												<td>0</td>
+												<td>6</td>
+											</tr>
+											<tr>
+												<td>Irak</td>
+												<td>133</td>
+												<td>10</td>
+												<td>32</td>
+											</tr>
+											<tr>
+												<td>Kuweit</td>
+												<td>123</td>
+												<td>0</td>
+												<td>9</td>
+											</tr>
+											<tr>
+												<td>India</td>
+												<td>119</td>
+												<td>2</td>
+												<td>13</td>
+											</tr>
+											<tr>
+												<td>San Marino</td>
+												<td>109</td>
+												<td>7</td>
+												<td>4</td>
+											</tr>
+											<tr>
+												<td>Libanon</td>
+												<td>109</td>
+												<td>3</td>
+												<td>3</td>
+											</tr>
+											<tr>
+												<td>VAE/UAE</td>
+												<td>98</td>
+												<td>0</td>
+												<td>23</td>
+											</tr>
+											<tr>
+												<td>Rusland</td>
+												<td>93</td>
+												<td>0</td>
+												<td>8</td>
+											</tr>
+											<tr>
+												<td>Peru</td>
+												<td>86</td>
+												<td>0</td>
+												<td>1</td>
+											</tr>
+											<tr>
+												<td>Luxemburg</td>
+												<td>81</td>
+												<td>1</td>
+												<td>0</td>
+											</tr>
+											<tr>
+												<td>Slowakije</td>
+												<td>72</td>
+												<td>0</td>
+												<td>0</td>
+											</tr>
+											<tr>
+												<td>Taiwan</td>
+												<td>67</td>
+												<td>1</td>
+												<td>22</td>
+											</tr>
+											<tr>
+												<td>Argentinië</td>
+												<td>65</td>
+												<td>2</td>
+												<td>3</td>
+											</tr>
+											<tr>
+												<td>Bulgarije</td>
+												<td>62</td>
+												<td>2</td>
+												<td>0</td>
+											</tr>
+											<tr>
+												<td>Zuid Afrika</td>
+												<td>62</td>
+												<td>0</td>
+												<td>0</td>
+											</tr>
+											<tr>
+												<td>Vietnam</td>
+												<td>61</td>
+												<td>0</td>
+												<td>16</td>
+											</tr>
+											<tr>
+												<td>Algerije</td>
+												<td>60</td>
+												<td>4</td>
+												<td>12</td>
+											</tr>
+											<tr>
+												<td>Ecuador</td>
+												<td>58</td>
+												<td>2</td>
+												<td>0</td>
+											</tr>
+											<tr>
+												<td>Servië</td>
+												<td>57</td>
+												<td>0</td>
+												<td>1</td>
+											</tr>
+											<tr>
+												<td>Kroatië</td>
+												<td>57</td>
+												<td>0</td>
+												<td>3</td>
+											</tr>
+											<tr>
+												<td>Panama</td>
+												<td>55</td>
+												<td>1</td>
+												<td>0</td>
+											</tr>
+											<tr>
+												<td>Brunei</td>
+												<td>54</td>
+												<td>0</td>
+												<td>0</td>
+											</tr>
+											<tr>
+												<td>Colombia</td>
+												<td>54</td>
+												<td>0</td>
+												<td>1</td>
+											</tr>
+											<tr>
+												<td>Mexico</td>
+												<td>53</td>
+												<td>0</td>
+												<td>4</td>
+											</tr>
+											<tr>
+												<td>Armenië</td>
+												<td>52</td>
+												<td>0</td>
+												<td>1</td>
+											</tr>
+											<tr>
+												<td>Albanië</td>
+												<td>51</td>
+												<td>1</td>
+												<td>0</td>
+											</tr>
+										</tbody>
+										<tfoot>
+											<tr>
+												<td>Land</td>
+												<td>Positieve Tests</td>
+												<td>Overledenen</td>
+												<td>Genezen</td>
+											</tr>
+										</tfoot>
+									</table>
+								</div>
 							</article>
 
 						<!-- Kaart -->
 							<article id="kaart">
 								<h2 class="major">Kaart</h2>
-								<p><a href="rivm-kaart.html" target="_blank">Klik hier</a> om te checken hoeveel positieve tests er in jouw gemeente zijn!<br><br><a href="global-kaart.html" target="_blank">Klik hier</a> om te checken hoe de besmettingen verspreid zijn over de wereld. <br><br>Niet genoeg? <a href="mailto:mauritsfokkens@gmail.com" target="_blank">Stuur me een mailtje!</a> Ik beantwoord je vragen en zet het misschien wel op de website!<br><br>Let op: het kan zijn dat de kaarten niet up-to-date zijn, Dit zijn kaarten van externe websites, niet van CovInfo.nl</p>
+								<p><a href="https://www.rivm.nl/coronavirus-kaart-van-nederland" target="_blank">Klik hier</a> om te checken hoeveel positieve tests er in jouw gemeente zijn!<br><br><a href="global-kaart.html" target="_blank">Klik hier</a> om te checken hoe de besmettingen verspreid zijn over de wereld. <br><br>Niet genoeg? <a href="mailto:mauritsfokkens@gmail.com" target="_blank">Stuur me een mailtje!</a> Ik beantwoord je vragen en zet het misschien wel op de website!<br><br>Let op: het kan zijn dat de kaarten niet up-to-date zijn, Dit zijn kaarten van externe websites, niet van CovInfo.nl</p>
 							</article>
 
 						<!-- Over -->
