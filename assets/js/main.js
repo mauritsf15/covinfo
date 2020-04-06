@@ -1,171 +1,384 @@
-/*
-	Eventually by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
-*/
+$(function () {
 
-(function() {
+    "use strict";
 
-	"use strict";
+    //===== Prealoder
 
-	var	$body = document.querySelector('body');
+    $(window).on('load', function (event) {
+        $('.preloader').delay(500).fadeOut(500);
+    });
 
-	// Methods/polyfills.
 
-		// classList | (c) @remy | github.com/remy/polyfills | rem.mit-license.org
-			!function(){function t(t){this.el=t;for(var n=t.className.replace(/^\s+|\s+$/g,"").split(/\s+/),i=0;i<n.length;i++)e.call(this,n[i])}function n(t,n,i){Object.defineProperty?Object.defineProperty(t,n,{get:i}):t.__defineGetter__(n,i)}if(!("undefined"==typeof window.Element||"classList"in document.documentElement)){var i=Array.prototype,e=i.push,s=i.splice,o=i.join;t.prototype={add:function(t){this.contains(t)||(e.call(this,t),this.el.className=this.toString())},contains:function(t){return-1!=this.el.className.indexOf(t)},item:function(t){return this[t]||null},remove:function(t){if(this.contains(t)){for(var n=0;n<this.length&&this[n]!=t;n++);s.call(this,n,1),this.el.className=this.toString()}},toString:function(){return o.call(this," ")},toggle:function(t){return this.contains(t)?this.remove(t):this.add(t),this.contains(t)}},window.DOMTokenList=t,n(Element.prototype,"classList",function(){return new t(this)})}}();
+    //===== Sticky
 
-		// canUse
-			window.canUse=function(p){if(!window._canUse)window._canUse=document.createElement("div");var e=window._canUse.style,up=p.charAt(0).toUpperCase()+p.slice(1);return p in e||"Moz"+up in e||"Webkit"+up in e||"O"+up in e||"ms"+up in e};
+    $(window).on('scroll', function (event) {
+        var scroll = $(window).scrollTop();
+        if (scroll < 20) {
+            $(".navbar-area").removeClass("sticky");
+            $(".navbar .navbar-brand img").attr("src", "assets/images/logo.svg");
+        } else {
+            $(".navbar-area").addClass("sticky");
+            $(".navbar .navbar-brand img").attr("src", "assets/images/logo-2.svg");
+        }
+    });
 
-		// window.addEventListener
-			(function(){if("addEventListener"in window)return;window.addEventListener=function(type,f){window.attachEvent("on"+type,f)}})();
 
-	// Play initial animations on page load.
-		window.addEventListener('load', function() {
-			window.setTimeout(function() {
-				$body.classList.remove('is-preload');
-			}, 100);
-		});
 
-	// Slideshow Background.
-		(function() {
+    //===== Section Menu Active
 
-			// Settings.
-				var settings = {
+    var scrollLink = $('.page-scroll');
+    // Active link switching
+    $(window).scroll(function () {
+        var scrollbarLocation = $(this).scrollTop();
 
-					// Images (in the format of 'url': 'alignment').
-						images: {
-							'images/bg01.jpg': 'center',
-							'images/bg02.jpg': 'center',
-							'images/bg03.jpg': 'center'
-						},
+        scrollLink.each(function () {
 
-					// Delay.
-						delay: 6000
+            var sectionOffset = $(this.hash).offset().top - 73;
 
-				};
+            if (sectionOffset <= scrollbarLocation) {
+                $(this).parent().addClass('active');
+                $(this).parent().siblings().removeClass('active');
+            }
+        });
+    });
 
-			// Vars.
-				var	pos = 0, lastPos = 0,
-					$wrapper, $bgs = [], $bg,
-					k, v;
 
-			// Create BG wrapper, BGs.
-				$wrapper = document.createElement('div');
-					$wrapper.id = 'bg';
-					$body.appendChild($wrapper);
+    //===== close navbar-collapse when a  clicked
 
-				for (k in settings.images) {
+    $(".navbar-nav a").on('click', function () {
+        $(".navbar-collapse").removeClass("show");
+    });
 
-					// Create BG.
-						$bg = document.createElement('div');
-							$bg.style.backgroundImage = 'url("' + k + '")';
-							$bg.style.backgroundPosition = settings.images[k];
-							$wrapper.appendChild($bg);
+    $(".navbar-toggler").on('click', function () {
+        $(this).toggleClass("active");
+    });
 
-					// Add it to array.
-						$bgs.push($bg);
+    $(".navbar-nav a").on('click', function () {
+        $(".navbar-toggler").removeClass('active');
+    });    
+    
 
-				}
+    //====== Magnific Popup
 
-			// Main loop.
-				$bgs[pos].classList.add('visible');
-				$bgs[pos].classList.add('top');
+    $('.video-popup').magnificPopup({
+        type: 'iframe'
+        // other options
+    });
 
-				// Bail if we only have a single BG or the client doesn't support transitions.
-					if ($bgs.length == 1
-					||	!canUse('transition'))
-						return;
 
-				window.setInterval(function() {
+    //===== Magnific Popup
 
-					lastPos = pos;
-					pos++;
+    $('.image-popup').magnificPopup({
+        type: 'image',
+        gallery: {
+            enabled: true
+        }
+    });
 
-					// Wrap to beginning if necessary.
-						if (pos >= $bgs.length)
-							pos = 0;
 
-					// Swap top images.
-						$bgs[lastPos].classList.remove('top');
-						$bgs[pos].classList.add('visible');
-						$bgs[pos].classList.add('top');
+    //===== Counter Up
 
-					// Hide last image after a short delay.
-						window.setTimeout(function() {
-							$bgs[lastPos].classList.remove('visible');
-						}, settings.delay / 2);
+    $('.counter').counterUp({
+        delay: 10,
+        time: 3000
+    });
 
-				}, settings.delay);
 
-		})();
+    //===== testimonial active
 
-	// Signup Form.
-		(function() {
+    $('.testimonial-active').slick({
+        dots: true,
+        speed: 800,
+        arrows: false,
+        centerMode: true,
+        centerPadding: "0",
+        slidesToShow: 3,
+        slidesToScroll: 4,
+        responsive: [
+            {
+                breakpoint: 1200,
+                settings: {
+                    slidesToShow: 3,
+                }
+            },
+            {
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: 2,
+                    centerMode: false,
+                }
+            },
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 1,
+                }
+            },
+            {
+                breakpoint: 576,
+                settings: {
+                    slidesToShow: 1,
+                }
+            },
+        ]
+    });
 
-			// Vars.
-				var $form = document.querySelectorAll('#signup-form')[0],
-					$submit = document.querySelectorAll('#signup-form input[type="submit"]')[0],
-					$message;
 
-			// Bail if addEventListener isn't supported.
-				if (!('addEventListener' in $form))
-					return;
+    //===== Back to top
 
-			// Message.
-				$message = document.createElement('span');
-					$message.classList.add('message');
-					$form.appendChild($message);
+    // Show or hide the sticky footer button
+    $(window).on('scroll', function (event) {
+        if ($(this).scrollTop() > 600) {
+            $('.back-to-top').fadeIn(200)
+        } else {
+            $('.back-to-top').fadeOut(200)
+        }
+    });
 
-				$message._show = function(type, text) {
 
-					$message.innerHTML = text;
-					$message.classList.add(type);
-					$message.classList.add('visible');
+    //Animate the scroll to yop
+    $('.back-to-top').on('click', function (event) {
+        event.preventDefault();
 
-					window.setTimeout(function() {
-						$message._hide();
-					}, 3000);
+        $('html, body').animate({
+            scrollTop: 0,
+        }, 1500);
+    });
 
-				};
 
-				$message._hide = function() {
-					$message.classList.remove('visible');
-				};
+    //=====  WOW active
 
-			// Events.
-			// Note: If you're *not* using AJAX, get rid of this event listener.
-				$form.addEventListener('submit', function(event) {
+    new WOW().init();
 
-					event.stopPropagation();
-					event.preventDefault();
 
-					// Hide message.
-						$message._hide();
+    //=====  particles
 
-					// Disable submit.
-						$submit.disabled = true;
 
-					// Process form.
-					// Note: Doesn't actually do anything yet (other than report back with a "thank you"),
-					// but there's enough here to piece together a working AJAX submission call that does.
-						window.setTimeout(function() {
+    if (document.getElementById("particles-1")) particlesJS("particles-1", {
+        "particles": {
+            "number": {
+                "value": 40,
+                "density": {
+                    "enable": !0,
+                    "value_area": 4000
+                }
+            },
+            "color": {
+                "value": ["#FFFFFF", "#FFFFFF", "#FFFFFF"]
+            },
+            "shape": {
+                "type": "circle",
+                "stroke": {
+                    "width": 0,
+                    "color": "#fff"
+                },
+                "polygon": {
+                    "nb_sides": 5
+                },
+                "image": {
+                    "src": "img/github.svg",
+                    "width": 33,
+                    "height": 33
+                }
+            },
+            "opacity": {
+                "value": 0.15,
+                "random": !0,
+                "anim": {
+                    "enable": !0,
+                    "speed": 0.2,
+                    "opacity_min": 0.15,
+                    "sync": !1
+                }
+            },
+            "size": {
+                "value": 50,
+                "random": !0,
+                "anim": {
+                    "enable": !0,
+                    "speed": 2,
+                    "size_min": 5,
+                    "sync": !1
+                }
+            },
+            "line_linked": {
+                "enable": !1,
+                "distance": 150,
+                "color": "#ffffff",
+                "opacity": 0.4,
+                "width": 1
+            },
+            "move": {
+                "enable": !0,
+                "speed": 1,
+                "direction": "top",
+                "random": !0,
+                "straight": !1,
+                "out_mode": "out",
+                "bounce": !1,
+                "attract": {
+                    "enable": !1,
+                    "rotateX": 600,
+                    "rotateY": 600
+                }
+            }
+        },
+        "interactivity": {
+            "detect_on": "canvas",
+            "events": {
+                "onhover": {
+                    "enable": !1,
+                    "mode": "bubble"
+                },
+                "onclick": {
+                    "enable": !1,
+                    "mode": "repulse"
+                },
+                "resize": !0
+            },
+            "modes": {
+                "grab": {
+                    "distance": 400,
+                    "line_linked": {
+                        "opacity": 1,
+                    }
+                },
+                "bubble": {
+                    "distance": 250,
+                    "size": 0,
+                    "duration": 2,
+                    "opacity": 0,
+                    "speed": 3
+                },
+                "repulse": {
+                    "distance": 400,
+                    "duration": 0.4
+                },
+                "push": {
+                    "particles_nb": 4
+                },
+                "remove": {
+                    "particles_nb": 2
+                }
+            }
+        },
+        "retina_detect": !0
+    });
 
-							// Reset form.
-								$form.reset();
+    if (document.getElementById("particles-2")) particlesJS("particles-2", {
+        "particles": {
+            "number": {
+                "value": 40,
+                "density": {
+                    "enable": !0,
+                    "value_area": 4000
+                }
+            },
+            "color": {
+                "value": ["#FFFFFF", "#FFFFFF", "#FFFFFF"]
+            },
+            "shape": {
+                "type": "circle",
+                "stroke": {
+                    "width": 0,
+                    "color": "#fff"
+                },
+                "polygon": {
+                    "nb_sides": 5
+                },
+                "image": {
+                    "src": "img/github.svg",
+                    "width": 33,
+                    "height": 33
+                }
+            },
+            "opacity": {
+                "value": 0.15,
+                "random": !0,
+                "anim": {
+                    "enable": !0,
+                    "speed": 0.2,
+                    "opacity_min": 0.15,
+                    "sync": !1
+                }
+            },
+            "size": {
+                "value": 50,
+                "random": !0,
+                "anim": {
+                    "enable": !0,
+                    "speed": 2,
+                    "size_min": 5,
+                    "sync": !1
+                }
+            },
+            "line_linked": {
+                "enable": !1,
+                "distance": 150,
+                "color": "#ffffff",
+                "opacity": 0.4,
+                "width": 1
+            },
+            "move": {
+                "enable": !0,
+                "speed": 1,
+                "direction": "top",
+                "random": !0,
+                "straight": !1,
+                "out_mode": "out",
+                "bounce": !1,
+                "attract": {
+                    "enable": !1,
+                    "rotateX": 600,
+                    "rotateY": 600
+                }
+            }
+        },
+        "interactivity": {
+            "detect_on": "canvas",
+            "events": {
+                "onhover": {
+                    "enable": !1,
+                    "mode": "bubble"
+                },
+                "onclick": {
+                    "enable": !1,
+                    "mode": "repulse"
+                },
+                "resize": !0
+            },
+            "modes": {
+                "grab": {
+                    "distance": 400,
+                    "line_linked": {
+                        "opacity": 1,
+                    }
+                },
+                "bubble": {
+                    "distance": 250,
+                    "size": 0,
+                    "duration": 2,
+                    "opacity": 0,
+                    "speed": 3
+                },
+                "repulse": {
+                    "distance": 400,
+                    "duration": 0.4
+                },
+                "push": {
+                    "particles_nb": 4
+                },
+                "remove": {
+                    "particles_nb": 2
+                }
+            }
+        },
+        "retina_detect": !0
+    });
 
-							// Enable submit.
-								$submit.disabled = false;
 
-							// Show message.
-								$message._show('success', 'Thank you!');
-								//$message._show('failure', 'Something went wrong. Please try again.');
 
-						}, 750);
 
-				});
 
-		})();
 
-})();
+});
